@@ -1,5 +1,5 @@
 require "gemnetic/version"
+require "gemnetic/world"
 
 module Gemnetic
-  # Your code goes here...
 end
