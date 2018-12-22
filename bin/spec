@@ -1,0 +1,6 @@
+docker-compose run ruby26 rspec
+docker-compose run ruby25 rspec
+docker-compose run ruby24 rspec
+docker-compose run ruby23 rspec
+docker-compose run ruby22 rspec
+docker-compose run ruby21 rspec

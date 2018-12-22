@@ -1,0 +1,33 @@
+version: '3.7'
+volumes:
+  gems:
+services:
+  gem: &gem
+    image: ruby:latest
+    working_dir: /opt/app
+    volumes:
+      - gems:/usr/local/bundle
+      - .:/opt/app
+  ruby26:
+    <<: *gem
+    image: ruby:2.6-rc
+
+  ruby25:
+    <<: *gem
+    image: ruby:2.5
+
+  ruby24:
+    <<: *gem
+    image: ruby:2.4
+
+  ruby23:
+    <<: *gem
+    image: ruby:2.3
+
+  ruby22:
+    <<: *gem
+    image: ruby:2.2
+
+  ruby21:
+    <<: *gem
+    image: ruby:2.1
