@@ -2,7 +2,7 @@ RSpec.describe Gemnetic::World do
   describe 'initializing the world' do
     subject { Gemnetic::World.new(specimen, params) }
     let(:params) { {} }
-    let!(:specimen) { Gemnetic::Specimen.new }
+    let!(:specimen) { MockedSpecimen }
 
     it 'must be a Gemnetic::World' do
       expect(subject).to be_a(Gemnetic::World)
@@ -18,7 +18,7 @@ RSpec.describe Gemnetic::World do
 
     describe 'setting the specimen class' do
       context 'as a specimen class' do
-        let!(:specimen) { Gemnetic::Specimen.new }
+        let!(:specimen) { MockedSpecimen }
 
         it 'must be ok' do
           expect { subject }.to_not raise_error
@@ -26,7 +26,7 @@ RSpec.describe Gemnetic::World do
       end
 
       context 'as a nil specimen' do
-        let(:specimen) { nil }
+        let(:specimen) { nil.class }
 
         it 'must raise an error' do
           expect { subject }.to raise_error(ArgumentError)
@@ -34,7 +34,7 @@ RSpec.describe Gemnetic::World do
       end
 
       context 'as a arbitrary value' do
-        let(:specimen) { 'foobar' }
+        let(:specimen) { 'foobar'.class }
 
         it 'must raise an error' do
           expect { subject }.to raise_error(ArgumentError)
