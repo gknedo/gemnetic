@@ -1,6 +1,6 @@
 module Gemnetic
   class Specimen
-    attr_accessor :gens
+    attr_accessor :gens, :generation
 
     def initialize
       randomize

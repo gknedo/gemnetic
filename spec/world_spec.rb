@@ -1,7 +1,6 @@
 RSpec.describe Gemnetic::World do
   describe 'initializing the world' do
-    subject { Gemnetic::World.new(specimen_class, params) }
-    let(:params) { {} }
+    subject { Gemnetic::World.new(specimen_class) }
     let!(:specimen_class) { MockedSpecimen }
 
     it 'must be a Gemnetic::World' do
@@ -17,8 +16,6 @@ RSpec.describe Gemnetic::World do
     end
 
     describe 'the generated population' do
-
-
       it 'must be equal to the population size' do
         expect(subject.population.count).to eq subject.population_size
       end
@@ -28,8 +25,6 @@ RSpec.describe Gemnetic::World do
           expect(specimen).to be_a_kind_of(Gemnetic::Specimen)
         end
       end
-
-
     end
 
     describe 'setting the specimen class' do
@@ -59,5 +54,49 @@ RSpec.describe Gemnetic::World do
     end
   end
 
+  describe 'selecting the population to keep' do
+    subject do
+      world.population_to_keep
+    end
 
+    let!(:world) do
+      Gemnetic::World.new(
+        specimen_class,
+        population_size: population_size,
+        population_keep: population_keep,
+        initialize_population: false
+        )
+    end
+    let!(:specimen_class) { MockedSpecimen }
+    let(:population_size) { 5 }
+    let(:population_keep) { 2 }
+    let!(:mocked_specimen1) do
+      mocked = MockedSpecimen.new
+      allow(mocked).to receive(:evaluate).and_return(100)
+      mocked
+    end
+    let!(:mocked_specimen2) do
+      mocked = MockedSpecimen.new
+      allow(mocked).to receive(:evaluate).and_return(50)
+      mocked
+    end
+
+    before do
+      mocked_population = []
+      3.times do |index|
+        mocked = MockedSpecimen.new
+        allow(mocked).to receive(:evaluate).and_return(rand(1..10))
+        mocked_population.push(mocked)
+      end
+      world.population = mocked_population + [mocked_specimen1, mocked_specimen2]
+    end
+
+    it 'must select only the amount of population to keep' do
+      expect(subject.count).to eq population_keep
+    end
+
+    it 'must select the best specimen only' do
+      expect(subject).to contain_exactly(mocked_specimen1, mocked_specimen2)
+    end
+  end
 end
