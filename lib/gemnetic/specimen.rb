@@ -28,7 +28,7 @@ module Gemnetic
     end
 
     def dup
-      self.class.new(@gens.dup)
+      self.class.new(gens: @gens.dup)
     end
 
     def to_s
