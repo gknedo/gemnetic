@@ -1,8 +1,6 @@
 # Gemnetic
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gemnetic`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A simple genetic algorithm implementation.
 
 ## Installation
 
@@ -21,8 +19,45 @@ Or install it yourself as:
     $ gem install gemnetic
 
 ## Usage
+Create a specimen class implementing the evaluate, randomize, crossover and mutate methods.
+```
+class MySpecimen < Gemnetic::Specimen
 
-See the example [here](https://github.com/gknedo/gemnetic/blob/master/example/run.rb).
+  def evaluate
+    # returns a specimen evaluation, big is better.
+  end
+
+  def mutate
+    # mutate the @gens variable and returns self
+  end
+
+  def randomize
+    # returns random gens
+  end
+
+  def crossover specimen
+    # crossover @gens with the specimen.gens and return self
+  end
+end
+```
+
+Initialize a world with:
+```
+world = Gemnetic::World.new(MySpecimenClass)
+```
+
+Run some steps and get the best
+```
+50.times do
+    world.next_generation
+end
+world.best_specimen
+```
+
+DONE!
+
+
+See a full example [here](https://github.com/gknedo/gemnetic/blob/master/example/run.rb).
 
 ## Development
 
