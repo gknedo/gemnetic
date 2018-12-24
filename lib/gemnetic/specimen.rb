@@ -1,9 +1,9 @@
 module Gemnetic
   class Specimen
-    attr_accessor :gens, :generation
+    attr_accessor :gens
 
-    def initialize
-      randomize
+    def initialize(params = {})
+      @gens = params.fetch(:gens, randomize)
     end
 
     def mix specimen
@@ -25,6 +25,17 @@ module Gemnetic
     def battle specimen
       return self unless self.evaluate < specimen.evaluate
       specimen
+    end
+
+    def dup
+      self.class.new(@gens.dup)
+    end
+
+    def to_s
+      {
+        evaluation: evaluate,
+        gens: @gens
+      }.to_s
     end
   end
 end
