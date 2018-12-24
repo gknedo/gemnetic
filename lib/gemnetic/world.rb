@@ -28,7 +28,14 @@ module Gemnetic
     end
 
     def population_to_keep
-      @population.sort_by { |specimen| specimen.evaluate }.last(@population_keep)
+      keep = []
+      @population.each do |specimen|
+        next keep.push(specimen) if keep.count < @population_keep
+        keep.sort_by! { |specimen| specimen.evaluate }
+        keep[0] = specimen if specimen.evaluate > keep[0].evaluate
+      end
+      
+      keep
     end
 
     private
