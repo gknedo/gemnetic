@@ -43,11 +43,13 @@ module Gemnetic
         new_population.push @population.sample.dup.mix(@population.sample.dup)
       end
 
+      new_population.uniq! { |specimen| specimen.gens }
       while new_population.count < @population_size do
         new_population.push @population.sample.dup.mutate
+        new_population.uniq! { |specimen| specimen.gens }
       end
 
-      current_generation += 1
+      @current_generation += 1
       @population = new_population
     end
 
@@ -71,9 +73,7 @@ module Gemnetic
 
     def initialize_population
       @population_size.times do
-        specimen = @specimen_class.new
-        specimen.generation = @current_generation
-        @population.push specimen
+        @population.push @specimen_class.new
       end
     end
 
