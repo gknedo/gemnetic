@@ -64,6 +64,10 @@ module Gemnetic
       keep
     end
 
+    def best_specimen
+      population_to_keep.last
+    end
+
     private
 
     def validate
