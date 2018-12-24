@@ -6,8 +6,8 @@ module Gemnetic
       @gens = params.fetch(:gens, randomize)
     end
 
-    def mix specimen
-      raise NotImplementedError, "You must override the mix method to mix two specimens in a new one"
+    def crossover specimen
+      raise NotImplementedError, "You must override the crossover method to crossover two specimens in a new one"
     end
 
     def mutate

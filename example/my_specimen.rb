@@ -19,13 +19,13 @@ class MySpecimen < Gemnetic::Specimen
     (0..9).to_a.sample(10)
   end
 
-  def mix specimen
+  def crossover specimen
     new_gens = []
     self_enumerator = 0
     specimen_enumerator = 0
-    mix_probability = rand
+    crossover_probability = rand
     while new_gens.count < 10
-      from_specimen = rand < mix_probability
+      from_specimen = rand < crossover_probability
       gen = from_specimen ? specimen.gens[specimen_enumerator] : @gens[self_enumerator]
       next unless gen
       new_gens.push(gen) unless new_gens.include?(gen)

@@ -1,7 +1,7 @@
 module Gemnetic
   class World
     attr_accessor :population_size, :population_keep, :population,
-      :mix_probability, :mutate_probability, :tournament_probability
+      :crossover_probability, :mutate_probability, :tournament_probability
     attr_reader :specimen_class, :current_generation
 
     def initialize(specimen_class, params = {})
@@ -10,12 +10,12 @@ module Gemnetic
       @population_keep = params.fetch(:population_keep, @population_size/10)
 
       probabilities = [
-        params.fetch(:mix_probability, 0.4).to_f,
+        params.fetch(:crossover_probability, 0.4).to_f,
         params.fetch(:mutate_probability, 0.1).to_f,
         params.fetch(:tournament_probability, 0.5).to_f
       ]
       probabilities_sum = probabilities.sum
-      @mix_probability = probabilities[0] * probabilities_sum
+      @crossover_probability = probabilities[0] * probabilities_sum
       @mutate_probability = probabilities[1] * probabilities_sum
       @tournament_probability = probabilities[2] * probabilities_sum
 
@@ -39,8 +39,8 @@ module Gemnetic
         new_population.push @population.sample.dup.mutate
       end
 
-      (to_create*@mix_probability).to_i.times do
-        new_population.push @population.sample.dup.mix(@population.sample.dup)
+      (to_create*@crossover_probability).to_i.times do
+        new_population.push @population.sample.dup.crossover(@population.sample.dup)
       end
 
       new_population.uniq! { |specimen| specimen.gens }

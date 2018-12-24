@@ -1,8 +1,8 @@
 RSpec.describe Gemnetic::Specimen do
   let!(:specimen) { MockedSpecimen.new }
 
-  describe 'the mix method' do
-    subject { specimen.mix(MockedSpecimen.new) }
+  describe 'the crossover method' do
+    subject { specimen.crossover(MockedSpecimen.new) }
 
     it 'must be implemented on inheritance' do
       expect {subject}.to raise_error NotImplementedError
