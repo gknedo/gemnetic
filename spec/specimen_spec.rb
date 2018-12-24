@@ -24,4 +24,18 @@ RSpec.describe Gemnetic::Specimen do
       expect {subject}.to raise_error NotImplementedError
     end
   end
+
+  describe 'battle' do
+    let!(:specimen_2) { MockedSpecimen.new }
+    before do
+      allow(specimen_2).to receive(:evaluate).and_return(rand(1..10))
+      allow(specimen).to receive(:evaluate).and_return(rand(11..20))
+    end
+
+    subject { specimen.battle(specimen_2) }
+
+    it 'must return the specimen with highest evaluation' do
+      expect(subject).to eq specimen
+    end
+  end
 end

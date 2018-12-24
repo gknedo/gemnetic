@@ -21,5 +21,10 @@ module Gemnetic
     def randomize
       raise NotImplementedError, "You must override the randomize method to randomize the gens of the specimen"
     end
+
+    def battle specimen
+      return self unless self.evaluate < specimen.evaluate
+      specimen
+    end
   end
 end
